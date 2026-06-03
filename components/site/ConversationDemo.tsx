@@ -45,9 +45,8 @@ export function ConversationDemo() {
               tone="dark"
             />
             <p className="mt-6 max-w-xl leading-8 text-white/72">
-              No backend or real AI is connected yet. This section is a static
-              product demo to show clinic owners what instant conversion can
-              feel like.
+              Here&rsquo;s how LumaCare is designed to turn a new inquiry into a
+              booked consultation.
             </p>
           </div>
 
