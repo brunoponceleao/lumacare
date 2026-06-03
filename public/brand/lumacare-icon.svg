@@ -1,0 +1,7 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">LumaCare icon</title>
+  <desc id="desc">A minimalist LC monogram for LumaCare.</desc>
+  <rect width="512" height="512" rx="112" fill="#294D3E"/>
+  <path d="M164 140V346H286" stroke="#F6F2EE" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M374 169C349 146 310 138 273 151C228 167 196 209 196 256C196 318 246 368 308 368C335 368 359 359 378 343" stroke="#F6F2EE" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
