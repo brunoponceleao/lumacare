@@ -45,19 +45,21 @@ export function Hero() {
 
         <div className="relative min-w-0">
           <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-[#efcdc7]/60 via-white to-[#c4d8cd]/50 blur-2xl" />
-          <div className="relative overflow-hidden rounded-[1.5rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(46,55,49,0.18)]">
-            <div className="relative aspect-[4/3] min-h-[320px] sm:min-h-[420px] lg:min-h-[500px]">
-              <Image
-                src="/images/hero-clinic-reception-selected.png"
-                alt="Premium aesthetic clinic reception with warm natural light and an elegant front desk"
-                fill
-                priority
-                sizes="(min-width: 1024px) 54vw, 100vw"
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e2420]/16 via-transparent to-white/8" />
+          <div className="relative space-y-3">
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/80 bg-white shadow-[0_30px_90px_rgba(46,55,49,0.16)]">
+              <div className="relative aspect-[4/3] min-h-[320px] sm:min-h-[420px] lg:min-h-[500px]">
+                <Image
+                  src="/images/hero-clinic-reception-selected.png"
+                  alt="Premium aesthetic clinic reception with warm natural light and an elegant front desk"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 54vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1e2420]/16 via-transparent to-white/8" />
+              </div>
             </div>
-            <div className="grid gap-4 border-t border-[#2e3731]/10 bg-white/95 px-5 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-6">
+            <div className="grid gap-4 rounded-[1.25rem] border border-white/80 bg-white/95 px-5 py-4 shadow-[0_18px_48px_rgba(46,55,49,0.12)] sm:grid-cols-[1fr_auto] sm:items-center sm:px-6">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9b7469]">
                   NEW INQUIRY
