@@ -1,45 +1,53 @@
+import { Fragment } from "react";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 const stages = [
-  "Inquiry captured",
-  "Patient qualified",
-  "Calendar checked",
-  "Consultation booked",
+  { label: "Inquiry captured", step: 1 },
+  { label: "Patient qualified", step: 2 },
+  { label: "Calendar checked", step: 3 },
+  { label: "Consultation booked", step: 4 },
 ];
 
 const messages = [
   {
     sender: "Patient",
     text: "Hi, do you offer Botox consultations?",
+    step: 1,
   },
   {
     sender: "LumaCare",
     text: "Yes. Is this your first injectable treatment, or have you had Botox before?",
+    step: 2,
   },
   {
     sender: "Patient",
     text: "First time. I want something natural.",
+    step: 3,
   },
   {
     sender: "LumaCare",
     text: "A consultation is the right next step. I can check the clinic calendar for this week.",
+    step: 4,
   },
   {
     sender: "Patient",
     text: "Friday morning would be ideal.",
+    step: 5,
   },
   {
     sender: "LumaCare",
     text: "Friday at 11:00 is available. I booked your consultation and shared the details with the clinic team.",
+    step: 6,
   },
 ];
 
 const patientDetails = [
-  ["Treatment", "Botox consultation"],
-  ["Patient type", "First-time injectable patient"],
-  ["Preference", "Natural-looking result"],
-  ["Readiness", "Ready to book"],
+  ["Treatment", "Botox consultation", 1],
+  ["Patient type", "First-time injectable patient", 2],
+  ["Preference", "Natural-looking result", 3],
+  ["Readiness", "Ready to book", 4],
 ];
 
 const calendarSlots = [
@@ -52,7 +60,7 @@ export function ConversationDemo() {
   return (
     <section
       id="demo"
-      className="relative overflow-hidden bg-[#2f4a3c] py-20 text-white sm:py-28"
+      className="demo-motion relative overflow-hidden bg-[#2f4a3c] py-20 text-white sm:py-28"
     >
       <div className="absolute left-1/2 top-8 h-80 w-[42rem] -translate-x-1/2 rounded-full bg-[#efcdc7]/16 blur-3xl" />
       <Container className="relative">
@@ -81,16 +89,12 @@ export function ConversationDemo() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                {stages.map((stage, index) => (
+                {stages.map((stage) => (
                   <span
-                    key={stage}
-                    className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-                      index === stages.length - 1
-                        ? "bg-[#2f4a3c] text-white"
-                        : "bg-[#eef4ef] text-[#2f4a3c]"
-                    }`}
+                    key={stage.label}
+                    className={`demo-stage demo-stage-${stage.step} rounded-full bg-[#eef4ef] px-3 py-1.5 text-xs font-semibold text-[#2f4a3c]`}
                   >
-                    {stage}
+                    {stage.label}
                   </span>
                 ))}
               </div>
@@ -102,7 +106,7 @@ export function ConversationDemo() {
                   <p className="text-xs font-semibold uppercase text-[#9b7469]">
                     Incoming inquiry
                   </p>
-                  <div className="mt-4 flex items-center justify-between gap-3 rounded-lg bg-[#2f4a3c] px-4 py-3 text-white">
+                  <div className="demo-source-whatsapp mt-4 flex items-center justify-between gap-3 rounded-lg bg-[#2f4a3c] px-4 py-3 text-white">
                     <div>
                       <p className="text-sm font-semibold">WhatsApp</p>
                       <p className="mt-1 text-xs text-white/68">
@@ -118,12 +122,15 @@ export function ConversationDemo() {
                     {["Instagram DM", "Website form"].map((source) => (
                       <div
                         key={source}
-                        className="flex items-center justify-between rounded-lg border border-[#2e3731]/10 px-4 py-3 text-sm"
+                        className="demo-monitored-source flex items-center justify-between rounded-lg border border-[#2e3731]/10 px-4 py-3 text-sm"
                       >
                         <span className="font-semibold text-[#46534c]">
                           {source}
                         </span>
-                        <span className="text-xs text-[#68736d]">Monitored</span>
+                        <span className="flex items-center gap-2 text-xs text-[#68736d]">
+                          <span className="demo-monitor-dot size-1.5 rounded-full bg-[#2f4a3c]" />
+                          Monitored
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -134,10 +141,10 @@ export function ConversationDemo() {
                     Qualification
                   </p>
                   <div className="mt-4 space-y-3">
-                    {patientDetails.map(([label, value]) => (
+                    {patientDetails.map(([label, value, step]) => (
                       <div
                         key={label}
-                        className="flex items-start justify-between gap-4 border-b border-[#2e3731]/10 pb-3 last:border-b-0 last:pb-0"
+                        className={`demo-detail demo-detail-${step} flex items-start justify-between gap-4 border-b border-[#2e3731]/10 pb-3 last:border-b-0 last:pb-0`}
                       >
                         <span className="text-sm text-[#68736d]">{label}</span>
                         <span className="max-w-36 text-right text-sm font-semibold text-[#25302a]">
@@ -167,31 +174,51 @@ export function ConversationDemo() {
                 <div className="mt-5 space-y-3">
                   {messages.map((message) => {
                     const isPatient = message.sender === "Patient";
+                    const showsTyping = isPatient && message.step < 6;
 
                     return (
-                      <div
-                        key={`${message.sender}-${message.text}`}
-                        className={`flex ${isPatient ? "justify-end" : "justify-start"}`}
-                      >
+                      <Fragment key={`${message.sender}-${message.text}`}>
                         <div
-                          className={`max-w-[88%] rounded-2xl px-4 py-3 shadow-sm ${
-                            isPatient
-                              ? "rounded-tr-md bg-[#2f4a3c] text-white"
-                              : "rounded-tl-md border border-[#2e3731]/10 bg-white text-[#25302a]"
+                          className={`demo-message demo-message-${message.step} flex ${
+                            isPatient ? "justify-end" : "justify-start"
                           }`}
                         >
-                          <p
-                            className={`mb-1 text-xs font-semibold uppercase ${
-                              isPatient ? "text-white/62" : "text-[#bf8677]"
+                          <div
+                            className={`max-w-[88%] rounded-2xl px-4 py-3 shadow-sm ${
+                              isPatient
+                                ? "rounded-tr-md bg-[#2f4a3c] text-white"
+                                : "rounded-tl-md border border-[#2e3731]/10 bg-white text-[#25302a]"
                             }`}
                           >
-                            {message.sender}
-                          </p>
-                          <p className="text-sm leading-6 sm:text-base">
-                            {message.text}
-                          </p>
+                            <p
+                              className={`mb-1 text-xs font-semibold uppercase ${
+                                isPatient ? "text-white/62" : "text-[#bf8677]"
+                              }`}
+                            >
+                              {message.sender}
+                            </p>
+                            <p className="text-sm leading-6 sm:text-base">
+                              {message.text}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                        {showsTyping ? (
+                          <div
+                            className={`demo-typing demo-typing-${message.step} flex justify-start`}
+                          >
+                            <div className="rounded-2xl rounded-tl-md border border-[#2e3731]/10 bg-white px-4 py-3 shadow-sm">
+                              <p className="mb-2 text-xs font-semibold uppercase text-[#bf8677]">
+                                LumaCare
+                              </p>
+                              <div className="flex gap-1.5">
+                                <span className="demo-typing-dot size-2 rounded-full bg-[#9b7469]" />
+                                <span className="demo-typing-dot size-2 rounded-full bg-[#9b7469]" />
+                                <span className="demo-typing-dot size-2 rounded-full bg-[#9b7469]" />
+                              </div>
+                            </div>
+                          </div>
+                        ) : null}
+                      </Fragment>
                     );
                   })}
                 </div>
@@ -212,9 +239,9 @@ export function ConversationDemo() {
                       return (
                         <div
                           key={`${slot.day}-${slot.time}`}
-                          className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm ${
+                          className={`demo-calendar-slot flex items-center justify-between rounded-lg border px-4 py-3 text-sm ${
                             isBooked
-                              ? "border-[#2f4a3c] bg-[#2f4a3c] text-white"
+                              ? "demo-calendar-booked border-[#2f4a3c] bg-[#2f4a3c] text-white"
                               : "border-[#2e3731]/10 bg-white text-[#46534c]"
                           }`}
                         >
@@ -224,7 +251,7 @@ export function ConversationDemo() {
                           <span
                             className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                               isBooked
-                                ? "bg-white/16 text-white"
+                                ? "demo-calendar-status-booked bg-white/16 text-white"
                                 : "bg-[#eef4ef] text-[#2f4a3c]"
                             }`}
                           >
@@ -242,13 +269,13 @@ export function ConversationDemo() {
                   </p>
                   <div className="mt-4 space-y-3">
                     {[
-                      ["Status", "Consultation booked"],
-                      ["Calendar", "Clinic calendar updated"],
-                      ["Team handoff", "Patient details sent"],
-                    ].map(([label, value]) => (
+                      ["Status", "Consultation booked", 1],
+                      ["Calendar", "Clinic calendar updated", 2],
+                      ["Team handoff", "Patient details sent", 3],
+                    ].map(([label, value, step]) => (
                       <div
                         key={label}
-                        className="rounded-lg bg-[#eef4ef] px-4 py-3"
+                        className={`demo-summary demo-summary-${step} rounded-lg bg-[#eef4ef] px-4 py-3`}
                       >
                         <p className="text-xs font-semibold uppercase text-[#68736d]">
                           {label}
