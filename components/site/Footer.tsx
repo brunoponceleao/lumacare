@@ -1,24 +1,28 @@
 import Image from "next/image";
 
 import { Container } from "@/components/ui/Container";
-import { site } from "@/lib/site";
+import { site, type LandingContent } from "@/lib/site";
 
-export function Footer() {
+type FooterProps = {
+  content: LandingContent["footer"];
+};
+
+export function Footer({ content }: FooterProps) {
   return (
     <footer className="border-t border-[#2e3731]/10 py-10">
       <Container className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-5">
-          <a className="block" href="#top" aria-label="LumaCare home">
+          <a className="block" href="#top" aria-label={content.homeAriaLabel}>
             <Image
               src="/brand/lumacare-logo.svg"
-              alt="LumaCare - AI Front Desk for Aesthetic Clinics"
+              alt={content.logoAlt}
               width={455}
               height={150}
               className="h-auto w-[185px] sm:w-[220px]"
             />
           </a>
           <p className="text-sm text-[#68736d]">
-            &copy; 2026 {site.name}. All rights reserved.
+            &copy; 2026 {site.name}. {content.rights}
           </p>
         </div>
 

@@ -2,61 +2,13 @@ import { Fragment } from "react";
 
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { LandingContent } from "@/lib/site";
 
-const stages = [
-  { label: "Inquiry captured", step: 1 },
-  { label: "Patient qualified", step: 2 },
-  { label: "Calendar checked", step: 3 },
-  { label: "Consultation booked", step: 4 },
-];
+type ConversationDemoProps = {
+  content: LandingContent["demo"];
+};
 
-const messages = [
-  {
-    sender: "Patient",
-    text: "Hi, do you offer Botox consultations?",
-    step: 1,
-  },
-  {
-    sender: "LumaCare",
-    text: "Yes. Is this your first injectable treatment, or have you had Botox before?",
-    step: 2,
-  },
-  {
-    sender: "Patient",
-    text: "First time. I want something natural.",
-    step: 3,
-  },
-  {
-    sender: "LumaCare",
-    text: "A consultation is the right next step. I can check the clinic calendar for this week.",
-    step: 4,
-  },
-  {
-    sender: "Patient",
-    text: "Friday morning would be ideal.",
-    step: 5,
-  },
-  {
-    sender: "LumaCare",
-    text: "Friday at 11:00 is available. I booked your consultation and shared the details with the clinic team.",
-    step: 6,
-  },
-];
-
-const patientDetails = [
-  ["Treatment", "Botox consultation", 1],
-  ["Patient type", "First-time injectable patient", 2],
-  ["Preference", "Natural-looking result", 3],
-  ["Readiness", "Ready to book", 4],
-];
-
-const calendarSlots = [
-  { day: "Thu", time: "2:00 PM", status: "Available" },
-  { day: "Fri", time: "11:00 AM", status: "Booked" },
-  { day: "Fri", time: "3:30 PM", status: "Available" },
-];
-
-export function ConversationDemo() {
+export function ConversationDemo({ content }: ConversationDemoProps) {
   return (
     <section
       id="demo"
@@ -66,9 +18,9 @@ export function ConversationDemo() {
       <Container className="relative">
         <div className="mx-auto max-w-3xl">
           <SectionHeader
-            eyebrow="Live booking experience"
-            title="See LumaCare in motion."
-            description="Watch a new patient inquiry get answered, qualified, matched with calendar availability, and turned into a booked consultation."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
             tone="dark"
             align="center"
           />
@@ -82,14 +34,14 @@ export function ConversationDemo() {
                   LC
                 </span>
                 <div className="min-w-0">
-                  <p className="font-semibold">LumaCare AI Front Desk</p>
+                  <p className="font-semibold">{content.productName}</p>
                   <p className="text-sm text-[#68736d]">
-                    WhatsApp inquiry synced with clinic calendar
+                    {content.productStatus}
                   </p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                {stages.map((stage) => (
+                {content.stages.map((stage) => (
                   <span
                     key={stage.label}
                     className={`demo-stage demo-stage-${stage.step} rounded-full bg-[#eef4ef] px-3 py-1.5 text-xs font-semibold text-[#2f4a3c]`}
@@ -104,22 +56,22 @@ export function ConversationDemo() {
               <aside className="border-b border-[#2e3731]/10 bg-[#f6eee9] p-5 lg:border-b-0 lg:border-r lg:p-4">
                 <div className="rounded-lg border border-[#2e3731]/10 bg-white p-4 shadow-sm lg:p-3">
                   <p className="text-xs font-semibold uppercase text-[#9b7469]">
-                    Incoming inquiry
+                    {content.incomingEyebrow}
                   </p>
                   <div className="demo-source-whatsapp mt-4 flex items-center justify-between gap-3 rounded-lg bg-[#2f4a3c] px-4 py-3 text-white lg:mt-3 lg:py-2.5">
                     <div>
-                      <p className="text-sm font-semibold">WhatsApp</p>
+                      <p className="text-sm font-semibold">{content.whatsapp.label}</p>
                       <p className="mt-1 text-xs text-white/68">
-                        Sunday, 14:18
+                        {content.whatsapp.time}
                       </p>
                     </div>
                     <span className="rounded-full bg-white/16 px-3 py-1 text-xs font-semibold">
-                      New lead
+                      {content.whatsapp.status}
                     </span>
                   </div>
 
                   <div className="mt-4 space-y-3 lg:mt-3 lg:space-y-2">
-                    {["Instagram DM", "Website form"].map((source) => (
+                    {content.monitoredSources.map((source) => (
                       <div
                         key={source}
                         className="demo-monitored-source flex items-center justify-between rounded-lg border border-[#2e3731]/10 px-4 py-3 text-sm lg:py-2.5"
@@ -129,7 +81,7 @@ export function ConversationDemo() {
                         </span>
                         <span className="flex items-center gap-2 text-xs text-[#68736d]">
                           <span className="demo-monitor-dot size-1.5 rounded-full bg-[#2f4a3c]" />
-                          Monitored
+                          {content.monitoredLabel}
                         </span>
                       </div>
                     ))}
@@ -138,10 +90,10 @@ export function ConversationDemo() {
 
                 <div className="mt-4 rounded-lg border border-[#2e3731]/10 bg-white p-4 shadow-sm lg:mt-3 lg:p-3">
                   <p className="text-xs font-semibold uppercase text-[#9b7469]">
-                    Qualification
+                    {content.qualificationEyebrow}
                   </p>
                   <div className="mt-4 space-y-3 lg:mt-3 lg:space-y-2">
-                    {patientDetails.map(([label, value, step]) => (
+                    {content.patientDetails.map(({ label, value, step }) => (
                       <div
                         key={label}
                         className={`demo-detail demo-detail-${step} flex items-start justify-between gap-4 border-b border-[#2e3731]/10 pb-3 last:border-b-0 last:pb-0`}
@@ -160,24 +112,24 @@ export function ConversationDemo() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-xs font-semibold uppercase text-[#9b7469]">
-                      Patient conversation
+                      {content.conversationEyebrow}
                     </p>
                     <h3 className="mt-2 text-xl font-semibold lg:text-lg">
-                      Botox consultation request
+                      {content.conversationTitle}
                     </h3>
                   </div>
                   <span className="rounded-full bg-[#eef4ef] px-3 py-1 text-xs font-semibold text-[#2f4a3c]">
-                    Responding now
+                    {content.respondingLabel}
                   </span>
                 </div>
 
                 <div className="demo-thread mt-5 flex flex-col gap-2 lg:mt-4 lg:gap-2">
-                  {messages.map((message) => {
-                    const isPatient = message.sender === "Patient";
+                  {content.messages.map((message) => {
+                    const isPatient = message.sender === "patient";
                     const showsTyping = isPatient && message.step < 6;
 
                     return (
-                      <Fragment key={`${message.sender}-${message.text}`}>
+                      <Fragment key={`${message.label}-${message.text}`}>
                         <div
                           className={`demo-message demo-message-${message.step} flex ${
                             isPatient ? "justify-end" : "justify-start"
@@ -195,7 +147,7 @@ export function ConversationDemo() {
                                 isPatient ? "text-white/62" : "text-[#bf8677]"
                               }`}
                             >
-                              {message.sender}
+                              {message.label}
                             </p>
                             <p className="text-sm leading-6">
                               {message.text}
@@ -227,20 +179,18 @@ export function ConversationDemo() {
               <aside className="border-t border-[#2e3731]/10 bg-white p-5 lg:border-l lg:border-t-0 lg:p-4">
                 <div className="rounded-lg border border-[#2e3731]/10 bg-[#f8f3ef] p-4 lg:p-3">
                   <p className="text-xs font-semibold uppercase text-[#9b7469]">
-                    Clinic calendar
+                    {content.calendarEyebrow}
                   </p>
                   <h3 className="mt-2 text-xl font-semibold lg:text-lg">
-                    Friday slot confirmed
+                    {content.calendarTitle}
                   </h3>
                   <div className="mt-4 space-y-2 lg:mt-3">
-                    {calendarSlots.map((slot) => {
-                      const isBooked = slot.status === "Booked";
-
+                    {content.calendarSlots.map((slot) => {
                       return (
                         <div
                           key={`${slot.day}-${slot.time}`}
                           className={`demo-calendar-slot flex items-center justify-between rounded-lg border px-4 py-3 text-sm lg:py-2.5 ${
-                            isBooked
+                            slot.isBooked
                               ? "demo-calendar-booked border-[#2f4a3c] bg-[#2f4a3c] text-white"
                               : "border-[#2e3731]/10 bg-white text-[#46534c]"
                           }`}
@@ -250,7 +200,7 @@ export function ConversationDemo() {
                           </span>
                           <span
                             className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                              isBooked
+                              slot.isBooked
                                 ? "demo-calendar-status-booked bg-white/16 text-white"
                                 : "bg-[#eef4ef] text-[#2f4a3c]"
                             }`}
@@ -265,14 +215,10 @@ export function ConversationDemo() {
 
                 <div className="mt-4 rounded-lg border border-[#2e3731]/10 bg-white p-4 shadow-sm lg:mt-3 lg:p-3">
                   <p className="text-xs font-semibold uppercase text-[#9b7469]">
-                    Booking summary
+                    {content.summaryEyebrow}
                   </p>
                   <div className="mt-4 space-y-3 lg:mt-3 lg:space-y-2">
-                    {[
-                      ["Status", "Consultation booked", 1],
-                      ["Calendar", "Clinic calendar updated", 2],
-                      ["Team handoff", "Patient details sent", 3],
-                    ].map(([label, value, step]) => (
+                    {content.summaryItems.map(({ label, value, step }) => (
                       <div
                         key={label}
                         className={`demo-summary demo-summary-${step} rounded-lg bg-[#eef4ef] px-4 py-3 lg:py-2.5`}

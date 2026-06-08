@@ -1,32 +1,25 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { LandingContent } from "@/lib/site";
 
-const before = [
-  "missed leads",
-  "manual follow-up",
-  "slow replies",
-];
+type BeforeAfterProps = {
+  content: LandingContent["beforeAfter"];
+};
 
-const after = [
-  "instant responses",
-  "qualified leads",
-  "more booked appointments",
-];
-
-export function BeforeAfter() {
+export function BeforeAfter({ content }: BeforeAfterProps) {
   return (
     <section className="bg-[#eef4ef] py-20 sm:py-28">
       <Container>
         <SectionHeader
-          eyebrow="Before vs After"
-          title="Replace reactive follow-up with instant lead conversion."
-          description="Clinic owners do not need more admin pressure. They need a calmer way to turn high-intent inquiries into appointments."
+          eyebrow={content.eyebrow}
+          title={content.title}
+          description={content.description}
           align="center"
         />
 
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          <ComparisonCard title="Before LumaCare" items={before} tone="before" />
-          <ComparisonCard title="After LumaCare" items={after} tone="after" />
+          <ComparisonCard title={content.beforeTitle} items={content.beforeItems} tone="before" />
+          <ComparisonCard title={content.afterTitle} items={content.afterItems} tone="after" />
         </div>
       </Container>
     </section>

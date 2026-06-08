@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { LandingPage } from "@/components/site/LandingPage";
 import { landingContent } from "@/lib/site";
 
-const content = landingContent.en;
+const content = landingContent.pt;
 
 export const metadata: Metadata = {
   title: content.metadata.title,
@@ -17,6 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <LandingPage locale="en" />;
+export default function PortugueseHome() {
+  return <LandingPage locale="pt" />;
 }

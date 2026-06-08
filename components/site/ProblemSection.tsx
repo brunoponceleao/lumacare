@@ -1,42 +1,24 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { LandingContent } from "@/lib/site";
 
-const problems = [
-  {
-    title: "Slow response times",
-    description:
-      "A patient who waits for a reply is already comparing your clinic with another option.",
-  },
-  {
-    title: "Missed inquiries",
-    description:
-      "Calls, forms, DMs, and website leads can slip through when the front desk is busy.",
-  },
-  {
-    title: "Lost bookings",
-    description:
-      "Every unanswered question can become a consultation that never reaches the calendar.",
-  },
-  {
-    title: "Staff overload",
-    description:
-      "Your team is expected to welcome patients, answer questions, follow up, and sell.",
-  },
-];
+type ProblemSectionProps = {
+  content: LandingContent["problem"];
+};
 
-export function ProblemSection() {
+export function ProblemSection({ content }: ProblemSectionProps) {
   return (
     <section id="problem" className="py-20 sm:py-28">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeader
-            eyebrow="The problem"
-            title="Your clinic is losing bookings every day without realizing it."
-            description="Aesthetic patients make decisions quickly. When a lead waits, gets missed, or receives a slow reply, the booking often moves somewhere else."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
 
           <div className="grid gap-4 sm:grid-cols-2">
-            {problems.map((problem, index) => (
+            {content.items.map((problem, index) => (
               <div
                 key={problem.title}
                 className="rounded-lg border border-[#2e3731]/10 bg-white/70 p-6 shadow-sm"

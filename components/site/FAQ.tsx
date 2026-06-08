@@ -1,20 +1,24 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { faqItems } from "@/lib/site";
+import type { LandingContent } from "@/lib/site";
 
-export function FAQ() {
+type FAQProps = {
+  content: LandingContent["faq"];
+};
+
+export function FAQ({ content }: FAQProps) {
   return (
     <section id="faq" className="py-20 sm:py-28">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeader
-            eyebrow="FAQ"
-            title="Questions clinic owners usually ask first."
-            description="This first version focuses on explaining the value clearly before adding product workflows or account functionality."
+            eyebrow={content.eyebrow}
+            title={content.title}
+            description={content.description}
           />
 
           <div className="space-y-4">
-            {faqItems.map((item) => (
+            {content.items.map((item) => (
               <details
                 key={item.question}
                 className="group rounded-lg border border-[#2e3731]/10 bg-white/72 p-6 open:bg-white"

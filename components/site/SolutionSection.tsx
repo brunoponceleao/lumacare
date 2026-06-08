@@ -1,37 +1,24 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { LandingContent } from "@/lib/site";
 
-const features = [
-  {
-    title: "Every lead gets answered",
-    description:
-      "LumaCare responds instantly when a new inquiry arrives, even when your team is with patients.",
-  },
-  {
-    title: "The right questions get asked",
-    description:
-      "It helps understand treatment interest, timeline, and readiness before the lead reaches your staff.",
-  },
-  {
-    title: "More leads move to appointments",
-    description:
-      "Instead of leaving leads in an inbox, LumaCare keeps the conversation moving toward a booked visit.",
-  },
-];
+type SolutionSectionProps = {
+  content: LandingContent["solution"];
+};
 
-export function SolutionSection() {
+export function SolutionSection({ content }: SolutionSectionProps) {
   return (
     <section id="solution" className="bg-[#f6eee9] py-20 sm:py-28">
       <Container>
         <SectionHeader
-          eyebrow="The solution"
-          title="Meet your AI Front Desk"
-          description="LumaCare responds instantly to every inquiry and helps aesthetic clinics convert more leads into booked appointments."
+          eyebrow={content.eyebrow}
+          title={content.title}
+          description={content.description}
           align="center"
         />
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {features.map((feature) => (
+          {content.features.map((feature) => (
             <article
               key={feature.title}
               className="rounded-lg border border-white/80 bg-white/76 p-7 shadow-sm"
